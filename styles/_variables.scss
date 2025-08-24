@@ -1,0 +1,55 @@
+// =====================
+// Fonts and Sizes
+// =====================
+$font-family: "Roboto", sans-serif;
+$transition-speed: 0.3s;
+
+// Breakpoints
+$mobile: 576px;
+$tablet: 768px;
+
+// =====================
+// Colors
+// =====================
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$accent-color: #17a2b8;
+$error-color: #dc3545;
+$light-text: #ffffff;
+
+// =====================
+// Light Mode
+// =====================
+$bg-color-light: #f4f7fa;
+$text-color-light: #333333;
+$card-bg-light: #ffffff;
+$box-shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+$hover-shadow-light: 0 6px 12px rgba(0, 0, 0, 0.15);
+
+// =====================
+// Dark Mode
+// =====================
+$bg-color-dark: #1a1a1a;
+$text-color-dark: #e0e0e0;
+$card-bg-dark: #2c2c2c;
+$box-shadow-dark: 0 4px 6px rgba(0, 0, 0, 0.3);
+$hover-shadow-dark: 0 6px 12px rgba(0, 0, 0, 0.4);
+
+// =====================
+// CSS Variables (Root)
+// =====================
+:root {
+  --bg-color: #{$bg-color-light};
+  --text-color: #{$text-color-light};
+  --card-background: #{$card-bg-light};
+  --box-shadow: #{$box-shadow-light};
+  --hover-shadow: #{$hover-shadow-light};
+}
+
+[data-theme="dark"] {
+  --bg-color: #{$bg-color-dark};
+  --text-color: #{$text-color-dark};
+  --card-background: #{$card-bg-dark};
+  --box-shadow: #{$box-shadow-dark};
+  --hover-shadow: #{$hover-shadow-dark};
+}

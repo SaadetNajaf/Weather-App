@@ -1,0 +1,286 @@
+@use "./variables" as *;
+@use "sass:color";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+}
+
+.fa-sun {
+  color: white;
+}
+
+// Global Styles
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color $transition-speed ease,
+    color $transition-speed ease-in-out;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  // Header
+  header {
+    text-align: center;
+
+    // Title
+    h1 {
+      color: $primary-color;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    // Theme button
+    .theme-toggle {
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      button {
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all $transition-speed ease-in-out;
+        &:hover {
+          scale: 1.2;
+        }
+      }
+    }
+
+    // Form
+
+    form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+
+      input {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        border-radius: 50px 0 0 50px;
+        font-size: 1rem;
+        border: 2px solid $primary-color;
+        border-right: none;
+        background-color: var(--card-background);
+        transition: all $transition-speed ease-in-out;
+        &::placeholder {
+          color: color.scale($text-color-light, $lightness: 40%);
+        }
+        [data-theme="dark"] & {
+          color: color.scale($text-color-dark, $lightness: 40%);
+        }
+      }
+
+      button {
+        background-color: $primary-color;
+        padding: 0 1.5rem;
+        border-radius: 0 50px 50px 0;
+        color: $light-text;
+        cursor: pointer;
+        transition: all $transition-speed ease-in-out;
+        &:hover {
+          background-color: color.scale($primary-color, $lightness: -10%);
+        }
+      }
+    }
+  }
+
+  .weather-container {
+    display: none;
+    &.active {
+      display: block;
+    }
+    .weather-card {
+      background-color: var(--card-background);
+      box-shadow: var(--box-shadow);
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 4rem auto;
+      transition: all $transition-speed ease-in-out;
+      cursor: pointer;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--hover-shadow);
+      }
+
+      // Header
+      .weather-header {
+        margin-bottom: 1.5rem;
+        .location-info {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.5rem;
+          gap: 1rem;
+          #location {
+            font-size: 1.8rem;
+            color: $primary-color;
+          }
+          .country-flag {
+            width: 30px;
+            height: 20px;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 3px;
+              object-fit: cover;
+            }
+          }
+        }
+
+        // Date
+        #date {
+          font-size: 0.9rem;
+          color: color.scale($text-color-light, $lightness: 20%);
+          [data-theme="dark"] {
+            color: color.scale($text-color-dark, $lightness: 20%);
+          }
+        }
+      }
+
+      //Info
+      .weather-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        // Temperature
+        .temperature {
+          #temperature {
+            font-size: 3rem;
+            font-weight: 700;
+          }
+
+          p {
+            color: color.scale(
+              $text-color-light,
+              $lightness: 20%
+            ); // koyulaştır
+            [data-theme="dark"] & {
+              color: color.scale($text-color-light, $lightness: 20%);
+            }
+          }
+        }
+
+        .weather-icon {
+          text-align: center;
+
+          img {
+            width: 80px;
+            height: 80px;
+          }
+
+          p {
+            color: $secondary-color;
+            font-weight: 600;
+          }
+        }
+      }
+
+      // Weather Details
+      .weather-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+
+        .details {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+
+          i {
+            color: $accent-color;
+            font-size: 1.5rem;
+          }
+
+          div {
+            p {
+              font-size: 0.8rem;
+              color: color.scale($text-color-light, $lightness: 20%);
+              [data-theme="dark"] {
+                color: color.scale($text-color-dark, $lightness: 20%);
+              }
+            }
+            p:last-child {
+              font-size: 1rem;
+              font-weight: bold;
+              color: var(--text-color);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Error Animation
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Error
+  .error-message {
+    background-color: rgba($error-color, 0.1);
+    margin: 3rem auto;
+    padding: 1rem;
+    color: $error-color;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    display: none;
+    &.show {
+      display: block;
+      animation: fadeIn $transition-speed ease;
+    }
+  }
+
+  // Loader Animation
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  // Loader
+  .loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    width: 100%;
+    display: none;
+    &.show {
+      display: block;
+    }
+    .loader {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 5px solid rgba($primary-color, 0.2);
+      border-top: 5px solid $primary-color;
+      animation: spin 1s infinite linear;
+      margin: 50px auto;
+    }
+  }
+}
